@@ -8,22 +8,17 @@ import { User } from './user.entity';
 
 @Module({
   imports: [
-    // .env faylini tizimga ulash
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-    // MySQL bazasiga ulanish sozlamalari
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
-      port: 3306,
+      port: 3306, // Hostinger uchun standart MySQL porti
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [User],
-      synchronize: true, // Bazada jadvallarni avtomatik yaratadi
+      synchronize: true, // Bazada users jadvalini o'zi yaratadi
     }),
-    // User jadvalini joriy modulda ishlatish uchun
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [AppController],
